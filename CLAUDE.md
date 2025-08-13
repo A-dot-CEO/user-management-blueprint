@@ -77,9 +77,38 @@ This is a React + TypeScript + Vite user management blueprint using Supabase as 
 
 ### Database Schema Management
 
-**Schema Source of Truth**:
-- App types: `src/types/database.ts`
-- SQL schemas: `supabase/schemas/tables.sql`, `supabase/schemas/rls.sql`, `supabase/schemas/indexes.sql`, `supabase/schemas/triggers.sql`, `supabase/schemas/functions.sql`
+**Multi-Schema Architecture**:
+The project uses a folder-per-schema approach with deterministic ordering controlled by `supabase/config.toml`.
+
+**Schema Organization**:
+```
+supabase/schemas/
+  _globals/           # Environment-wide definitions
+    extensions.sql    # PostgreSQL extensions
+    roles.sql         # Custom roles  
+    publications.sql  # Realtime publications
+  public/             # Main application schema
+    tables.sql        # Table definitions
+    constraints.sql   # Foreign keys, checks, unique constraints
+    functions.sql     # Stored procedures
+    triggers.sql      # Database triggers
+    rls.sql          # Row Level Security policies
+    privileges.sql   # Grants and permissions
+  [other-schemas]/    # Additional domain schemas (billing, projects, etc.)
+    tables.sql
+    constraints.sql
+    functions.sql
+    triggers.sql
+    rls.sql
+    privileges.sql
+```
+
+**Execution Order** (defined in `config.toml`):
+1. `_globals/**/*.sql` - Extensions, roles, publications
+2. `*/tables.sql` - All table definitions across schemas
+3. `*/constraints.sql` - Foreign keys and constraints
+4. `*/functions.sql` and `*/triggers.sql` - Programmable objects
+5. `*/rls.sql` and `*/privileges.sql` - Security policies
 
 **Best Practices**:
 - Use Declarative Database Schemas; never create or update migrations manually
@@ -90,12 +119,19 @@ This is a React + TypeScript + Vite user management blueprint using Supabase as 
 - Include `created_at` and `updated_at` timestamps with triggers
 - Follow PostgreSQL naming conventions (snake_case)
 - Do not add comments, use descriptive names for functions, triggers and RLS policies
+- Keep files idempotent using `if not exists` and `create or replace`
 
 **Schema Changes Workflow** (follow this exact sequence):
-1. **Update schema files** in `supabase/schemas/` folder first
+1. **Update schema files** in appropriate `supabase/schemas/<schema>/` folder
 2. **Generate migration**: `npm run db:diff -- -f <change_summary>` (use snake_case naming)
 3. **Apply migration**: `npm run db:migrate`
 4. **Update TypeScript types**: `npm run db:types`
+
+**Adding New Schemas**:
+1. Create folder: `supabase/schemas/<schema-name>/`
+2. Add required files: `tables.sql`, `constraints.sql`, `functions.sql`, `triggers.sql`, `rls.sql`, `privileges.sql`
+3. Expose in API: Add schema to `[api].schemas` in `config.toml`
+4. Use in client: `supabase.schema('<schema-name>').from('table')`
 
 **Seed Data**:
 - Update seed files in `supabase/seeds/` when changing schema

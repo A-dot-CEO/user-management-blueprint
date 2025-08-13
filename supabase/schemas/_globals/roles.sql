@@ -1,0 +1,2 @@
+-- Global roles and permissions
+-- Define any custom roles needed across schemas

@@ -51,12 +51,21 @@ enabled = true
 # Specifies an ordered list of schema files that describe your database.
 # Supports glob patterns relative to supabase directory: "./schemas/*.sql"
 schema_paths = [
-  "./schemas/tables.sql",
-  "./schemas/functions.sql",
-  "./schemas/triggers.sql",
-  "./schemas/rls.sql",
-  "./schemas/indexes.sql",
-  "./schemas/*.sql",
+  "./schemas/_globals/**/*.sql",      # extensions, roles, publications, etc.
+
+  # Pass 1: base objects across all schemas
+  "./schemas/*/tables.sql",
+
+  # Pass 2: constraints (FKs, checks, uniques)
+  "./schemas/*/constraints.sql",
+
+  # Pass 3: programmable objects
+  "./schemas/*/functions.sql",
+  "./schemas/*/triggers.sql",
+
+  # Pass 4: security
+  "./schemas/*/rls.sql",
+  "./schemas/*/privileges.sql"
 ]
 
 [db.seed]

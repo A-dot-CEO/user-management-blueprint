@@ -1,0 +1,2 @@
+-- Public schema constraints (foreign keys, checks, unique constraints)
+-- This file runs after all tables are created across all schemas
