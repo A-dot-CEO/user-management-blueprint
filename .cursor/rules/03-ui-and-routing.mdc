@@ -1,0 +1,13 @@
+---
+globs: *.tsx
+---
+
+# UI and Routing Conventions
+
+- **Routing**: Use React Router declarative APIs: `<BrowserRouter>`, `<Routes>`, `<Route>`, `<Link>`, `useNavigate`, `useLocation`
+- **shadcn/ui**: Prefer components from `src/components/ui`; maintain New York style
+- **Radix UI**: Use primitive components for accessibility
+- **Tailwind v4**: Use CSS variables; co-locate component styles with components
+- **Icons**: Import from `lucide-react`
+- **Forms**: Use the form primitives in [`src/components/ui/form.tsx`](mdc:src/components/ui/form.tsx)
+- **Toasts**: Use [`src/components/ui/sonner.tsx`](mdc:src/components/ui/sonner.tsx)

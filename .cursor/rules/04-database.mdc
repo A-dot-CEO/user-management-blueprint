@@ -1,0 +1,34 @@
+---
+description: Database schema design, migrations, Supabase usage, and workflow for making and applying database changes
+---
+
+# Database and Supabase Conventions
+
+- **Schema Source of Truth**:
+  - App types: [`src/types/database.ts`](mdc:src/types/database.ts)
+  - SQL: [`supabase/schemas/tables.sql`](mdc:supabase/schemas/tables.sql), [`supabase/schemas/rls.sql`](mdc:supabase/schemas/rls.sql), [`supabase/schemas/indexes.sql`](mdc:supabase/schemas/indexes.sql), [`supabase/schemas/triggers.sql`](mdc:supabase/schemas/triggers.sql), [`supabase/schemas/functions.sql`](mdc:supabase/schemas/functions.sql)
+- **Client**: Initialize and use Supabase via [`src/lib/supabase/client.ts`](mdc:src/lib/supabase/client.ts)
+- **Best Practices**:
+  - Use Declarative Database Schemas; never create or update migrations manually; follow schema changes workflow
+  - Always enable row-level security (RLS) on every table; use least privilege
+  - Access via PostgREST using `@supabase/supabase-js`
+  - Use UUID primary keys with `uuid_generate_v4()`
+  - Use TEXT instead of VARCHAR
+  - Include `created_at` and `updated_at` timestamps with triggers
+  - Follow PostgreSQL naming conventions (snake_case)
+  - Do not add comments, use descriptive names for funcitons, triggers and RLS policies
+
+# Schema Changes Workflow
+
+When updating database schema, follow this exact sequence:
+
+1. **Update schema files** in `supabase/schemas/` folder first
+2. **Generate migration**: `npm run db:diff -- -f <change_summary>`. Summarize change in a few words in change_summary, use snake_case naming
+3. **Apply migration**: `npm run db:migrate`
+4. **Update TypeScript types**: `npm run db:types`
+
+# Seed data
+
+- When changing schema update seed files in `supabase/seeds/`
+- Using a separate seed file for each table
+- Ask user if they want to reset database with new seed data. If yes run `npm run db:reset`.

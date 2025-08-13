@@ -1,0 +1,21 @@
+---
+alwaysApply: true
+---
+
+# Project Structure Guide
+
+Key entry points and folders:
+
+- **App Shell**: [`src/main.tsx`](mdc:src/main.tsx) bootstraps React and renders [`src/App.tsx`](mdc:src/App.tsx)
+- **Routing**: Pages live in [`src/pages/`](mdc:src/pages/) with an index route at [`src/pages/Index.tsx`](mdc:src/pages/Index.tsx)
+- **UI Components**: shadcn/ui components under [`src/components/ui/`](mdc:src/components/ui/)
+- **Hooks**: Reusable hooks under [`src/hooks/`](mdc:src/hooks/)
+- **Supabase**: Client and helpers at [`src/lib/supabase/`](mdc:src/lib/supabase/)
+- **Global Styles**: Tailwind entry at [`src/index.css`](mdc:src/index.css)
+- **Types**: Generated Supabase types at [`src/types/database.ts`](mdc:src/types/database.ts)
+- **Supabase SQL**: Database schema and policies under [`supabase/schemas/`](mdc:supabase/schemas/)
+
+Conventions:
+
+- Keep feature logic close to pages; extract shared UI into `src/components`
+- Use absolute imports via Vite aliases

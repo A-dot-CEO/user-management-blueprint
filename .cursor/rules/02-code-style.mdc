@@ -1,0 +1,13 @@
+---
+globs: *.ts,*.tsx
+---
+
+# TypeScript Code Style
+
+- **Naming**: Avoid short names; prefer descriptive identifiers. Functions are verbs; variables are nouns
+- **Types**: Explicitly annotate function signatures and public APIs; avoid `any`
+- **Control Flow**: Prefer early returns; handle errors and edge cases first
+- **Comments**: Only where helpful, explaining "why" not "how"; no TODOs
+- **Formatting**: Match existing formatting; avoid large unrelated reformatting
+- **React**: Use function components and hooks; keep props typed; avoid unnecessary re-renders
+- **Imports**: Group by standard, third-party, internal; avoid deep relative paths when aliases exist

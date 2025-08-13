@@ -1,0 +1,18 @@
+---
+alwaysApply: true
+---
+
+# Tech Stack and Development Workflow
+
+- **Runtime/Build**: npm, Vite, TypeScript, React 19
+- **Development**: Do not run `npm run dev`; it's always running in the background
+- **Linting/Type Checks**: Use `npm run check` to lint, format, and type-check
+- **Routing**: React Router (Declarative APIs: `<BrowserRouter>`, `<Link>`, `useNavigate`, `useLocation`)
+- **Database**: Supabase Postgres. Tables schema [`supabase/schemas/tables.sql`](mdc:supabase/schemas/tables.sql),
+- **UI**: shadcn/ui (New York) + Radix UI + Tailwind CSS v4
+- **Icons**: Lucide React (`lucide-react`)
+- **Backend**: Supabase PostgREST via `@supabase/supabase-js`. Client at [`src/lib/supabase/client.ts`](mdc:src/lib/supabase/client.ts). Client API types at [`src/types/database.ts`](mdc:src/types/database.ts).
+
+## Commands
+
+- `npm run check`: Lint, format, and type-check the codebase
