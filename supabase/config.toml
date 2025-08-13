@@ -51,7 +51,9 @@ enabled = true
 # Specifies an ordered list of schema files that describe your database.
 # Supports glob patterns relative to supabase directory: "./schemas/*.sql"
 schema_paths = [
-  "./schemas/_globals/**/*.sql",      # extensions, roles, publications, etc.
+  # Global setup first
+  "./schemas/_globals/extensions.sql",
+  "./schemas/_globals/roles.sql",
 
   # Pass 1: base objects across all schemas
   "./schemas/*/tables.sql",

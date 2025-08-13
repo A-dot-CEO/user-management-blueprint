@@ -1,0 +1,12 @@
+-- Public schema indexes
+-- Database indexes for performance optimization
+
+-- Template for creating indexes:
+-- create index if not exists idx_table_name_column_name 
+--   on public.table_name (column_name);
+--
+-- create index if not exists idx_table_name_user_id 
+--   on public.table_name (user_id);
+--
+-- create index if not exists idx_table_name_created_at 
+--   on public.table_name (created_at desc);
